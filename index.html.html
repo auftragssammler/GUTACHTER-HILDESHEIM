@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Anfrage | Kfz-Sachverständigenbüro Semi Civan</title>
+  <style>
+    :root {
+      --bg: #f2f5f8; 
+      --card: #ffffff;
+      --border: #ced4da;
+      --text: #101820; 
+      --muted: #6c757d;
+      --accent: #0044cc;
+      --accent-soft: rgba(0, 68, 204, 0.08);
+      --accent-hover: #0033aa;
+    }
+
+    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 30px 15px;
+    }
+
+    .container { width: 100%; max-width: 550px; }
+
+    .header {
+      text-align: center;
+      padding-bottom: 35px;
+    }
+    .header h1 { 
+      margin: 0; 
+      font-size: 28px; 
+      font-weight: 900;
+      text-transform: uppercase; 
+      letter-spacing: 1.2px; 
+      color: var(--accent);
+    }
+    .header p { color: var(--muted); font-size: 15px; margin-top: 8px; font-weight: 600; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 25px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+    }
+    .card h2 { 
+      margin-top: 0; 
+      font-size: 20px; 
+      margin-bottom: 20px; 
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--accent);
+    }
+    .card h2::before {
+      content: "";
+      width: 5px;
+      height: 24px;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    label { display: block; font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 8px; margin-top: 20px; text-transform: uppercase; letter-spacing: 0.8px; }
+    label span.opt { font-size: 11px; color: var(--muted); text-transform: lowercase; font-weight: 500; }
+
+    input, select, textarea {
+      width: 100%; background: #ffffff; border: 2px solid #e0e6ed;
+      color: var(--text); padding: 14px 16px; border-radius: 12px; font-size: 15px; outline: none;
+      appearance: none; display: block; font-family: inherit; transition: all 0.2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus { 
+      border-color: var(--accent); 
+      box-shadow: 0 0 0 4px rgba(0, 68, 204, 0.12);
+    }
+    input::placeholder { color: #adb5bd; }
+
+    input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; filter: hue-rotate(200deg) saturate(2); }
+
+    textarea { min-height: 120px; resize: vertical; }
+
+    .main-selection, .abwicklung-selection { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .main-selection label, .abwicklung-btn { 
+      margin: 0; padding: 18px 10px; background: #ffffff; border: 2px solid #e0e6ed; border-radius: 12px; 
+      text-align: center; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--muted); 
+      display: block; transition: 0.3s ease; 
+    }
+
+    .logic-radio { display: none; }
+
+    #type-beratung:checked ~ .container .select-beratung,
+    #type-schaden:checked ~ .container .select-schaden,
+    #abw-privat:checked + .abwicklung-btn,
+    #abw-versicherung:checked + .abwicklung-btn { 
+      border-color: var(--accent); 
+      background: var(--accent-soft); 
+      color: var(--accent);
+      box-shadow: 0 4px 15px rgba(0, 68, 204, 0.1);
+    }
+
+    .schaden-details, .beratung-details { display: none; }
+    #type-schaden:checked ~ .container .schaden-details { display: block; }
+    #type-beratung:checked ~ .container .beratung-details { display: block; }
+
+    .file-input-wrapper { margin-top: 15px; }
+    .file-custom-btn { 
+      background: #fcfcfc; border: 2.5px dashed var(--border); color: var(--muted); 
+      padding: 24px; border-radius: 12px; text-align: center; font-size: 15px; 
+      cursor: pointer; transition: 0.2s; font-weight: 600;
+    }
+    .file-custom-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+    #preview-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
+    .preview-wrapper { position: relative; }
+    .preview-img { width: 85px; height: 85px; object-fit: cover; border-radius: 10px; border: 2px solid var(--accent-soft); }
+    .remove-btn { position: absolute; top: -8px; right: -8px; background: #d90429; color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+
+    .privacy-row { display: flex; align-items: flex-start; gap: 12px; margin-top: 25px; }
+    .privacy-row input[type="checkbox"] { width: 24px; height: 24px; accent-color: var(--accent); cursor: pointer; margin-top: 2px; }
+    .privacy-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .privacy-text a { color: var(--accent); text-decoration: none; font-weight: 800; border-bottom: 2px solid var(--accent-soft); }
+
+    .btn-submit { 
+      width: 100%; background: var(--accent); color: #fff; border: none; padding: 22px; 
+      border-radius: 16px; font-size: 19px; font-weight: 900; text-transform: uppercase; 
+      cursor: pointer; margin-top: 10px; transition: 0.3s;
+      box-shadow: 0 10px 25px rgba(0, 68, 204, 0.25);
+      letter-spacing: 1px;
+    }
+    .btn-submit:hover { 
+      background: var(--accent-hover); 
+      transform: translateY(-2px); 
+      box-shadow: 0 14px 30px rgba(0, 68, 204, 0.35); 
+    }
+
+    @media (max-width: 480px) {
+      .header h1 { font-size: 24px; }
+      .card { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <input type="radio" name="design_type" id="type-beratung" class="logic-radio" checked>
+  <input type="radio" name="design_type" id="type-schaden" class="logic-radio">
+
+  <div class="container">
+    <div class="header">
+      <h1>KFZ-GUTACHTER <span>HILDESHEIM</span></h1>
+      <p>Sachverständigenbüro Semi Civan</p>
+    </div>
+
+    <form action="https://formspree.io/f/xpqwyjoq" method="POST" enctype="multipart/form-data">
+
+      <input type="hidden" name="Kategorie" id="hidden-type" value="Beratung / Termin">
+
+      <div class="card">
+        <h2>Anliegen wählen</h2>
+        <div class="main-selection">
+          <label for="type-beratung" class="select-beratung">Beratung / Termin</label>
+          <label for="type-schaden" class="select-schaden">Gutachten Anfrage</label>
+        </div>
+      </div>
+
+      <div class="beratung-details">
+        <div class="card">
+          <h2>Terminanfrage</h2>
+          <label>Fahrzeugmodell</label>
+          <input type="text" name="Modell_Beratung" placeholder="z.B. Audi A4 Limousine">
+
+          <label>Bevorzugtes Datum</label>
+          <input type="date" name="Wunschdatum" id="termin-input">
+
+          <label>Leistungsart</label>
+          <select name="Leistung">
+            <option value="" disabled selected>Bitte wählen...</option>
+            <option value="Allgemeine Beratung">Allgemeine Beratung</option>
+            <option value="Wertgutachten">Wertgutachten / Oldtimer</option>
+            <option value="Reparaturbestätigung">Reparaturbestätigung</option>
+            <option value="Kostenvoranschlag">Kostenvoranschlag</option>
+          </select>
+
+          <label>Nachricht <span class="opt">(optional)</span></label>
+          <textarea name="Nachricht" placeholder="Wie können wir Ihnen weiterhelfen?"></textarea>
+        </div>
+      </div>
+
+      <div class="schaden-details">
+        <div class="card">
+          <h2>Gutachten Anfrage</h2>
+          <label>Art des Gutachtens</label>
+          <select name="Gutachten_Art">
+            <option value="" disabled selected>Bitte wählen...</option>
+            <option value="Unfall- und Schadengutachten">Unfall- und Schadengutachten</option>
+            <option value="Reparaturbestätigung">Reparaturbestätigung</option>
+            <option value="Wertgutachten">Wertgutachten</option>
+            <option value="Sonstiges Gutachten">Sonstiges Gutachten</option>
+          </select>
+
+          <label>Fahrzeugmodell</label>
+          <input type="text" name="Modell_Schaden" placeholder="z.B. Mercedes C-Klasse (2023)">
+
+          <label>Abrechnung</label>
+          <div class="abwicklung-selection">
+            <input type="radio" name="Abrechnung" id="abw-privat" value="Privat" class="logic-radio">
+            <label for="abw-privat" class="abwicklung-btn">Privat</label>
+
+            <input type="radio" name="Abrechnung" id="abw-versicherung" value="Versicherung" class="logic-radio">
+            <label for="abw-versicherung" class="abwicklung-btn">Versicherung</label>
+          </div>
+
+          <label>Beschreibung & Fotos <span class="opt">(optional)</span></label>
+          <textarea name="Schaden_Info" placeholder="Was ist passiert? Wer ist die gegnerische Versicherung?"></textarea>
+
+          <div class="file-input-wrapper">
+            <input type="file" name="Bilder" id="file-field" multiple accept="image/*" style="display:none;">
+            <div class="file-custom-btn" onclick="document.getElementById('file-field').click()">
+              <span id="file-label">📸 Fotos hier hochladen</span>
+            </div>
+          </div>
+          <div id="preview-container"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Ihre Kontaktdaten</h2>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+          <div><label>Vorname</label><input type="text" name="Vorname" placeholder="Erika" required></div>
+          <div><label>Nachname</label><input type="text" name="Nachname" placeholder="Mustermann" required></div>
+        </div>
+        <label>Telefonnummer</label>
+        <input type="tel" name="Telefon" required placeholder="z.B. 0171 1234567">
+
+        <label>E-Mail Adresse</label>
+        <input type="email" name="Email" required placeholder="beispiel@mail.de">
+
+        <div class="privacy-row">
+          <input type="checkbox" name="DSGVO" id="dsgvo" required>
+          <label for="dsgvo" class="privacy-text">
+            Ich stimme zu, dass meine Daten zur Bearbeitung der Anfrage verwendet werden. 
+            Infos unter <a href="https://kfz-gutachter-hildesheim.com/datenschutzerklaerung/" target="_blank">Datenschutz</a>.
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Anfrage jetzt absenden</button>
+    </form>
+  </div>
+
+  <script>
+    const hiddenType = document.getElementById('hidden-type');
+    document.getElementById('type-beratung').addEventListener('change', () => { hiddenType.value = "Beratung / Termin"; });
+    document.getElementById('type-schaden').addEventListener('change', () => { hiddenType.value = "Gutachten Anfrage"; });
+
+    const dateInput = document.getElementById('termin-input');
+    if (dateInput) { dateInput.min = new Date().toISOString().split('T')[0]; }
+
+    const fileField = document.getElementById('file-field');
+    const previewContainer = document.getElementById('preview-container');
+    const fileLabel = document.getElementById('file-label');
+    let selectedFiles = [];
+
+    fileField.addEventListener('change', function() {
+      const newFiles = Array.from(this.files);
+      selectedFiles = [...selectedFiles, ...newFiles];
+      renderPreviews();
+    });
+
+    function renderPreviews() {
+      previewContainer.innerHTML = '';
+      if (selectedFiles.length > 0) {
+        fileLabel.textContent = selectedFiles.length + " Foto(s) ausgewählt";
+        selectedFiles.forEach((file, index) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'preview-wrapper';
+            wrapper.innerHTML = `<img src="${e.target.result}" class="preview-img"><button type="button" class="remove-btn" onclick="removeFile(${index})">✕</button>`;
+            previewContainer.appendChild(wrapper);
+          };
+          reader.readAsDataURL(file);
+        });
+      } else {
+        fileLabel.textContent = "📸 Fotos hier hochladen";
+      }
+      const dt = new DataTransfer();
+      selectedFiles.forEach(f => dt.items.add(f));
+      fileField.files = dt.files;
+    }
+
+    function removeFile(index) {
+      selectedFiles.splice(index, 1);
+      renderPreviews();
+    }
+  </script>
+</body>
+</html>
